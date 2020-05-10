@@ -1,7 +1,9 @@
 <?php 
+
 class Abonne {
-//POJO : plain old java object
-//datas
+    //POJO : plain old java object
+    //datas
+
 private $nom;
 private $prenom;
 private $date_naissance;
@@ -36,16 +38,16 @@ public function setNom(string $nom){
 $this->nom=$nom;
 }
 //Methodes  magics :
-public  __get($nom_attribut){
+public function  __get($nom_attribut){
 return $this->nom_attribut;
 }
-public  __set($nom_attribut,$value){
+public function  __set($nom_attribut,$value){
  $this->nom_attribut=$value;
 }
 
 //methodes
 public function ajouter(){
-    
+
 }
 
 
