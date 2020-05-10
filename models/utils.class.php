@@ -5,6 +5,7 @@ class Utils {
 public static  $_CNX=NULL;// attribut de la classe 
 const TVA=20;
 public static  $TABLE ='abonne'; 
+
 public    static function connecter_db() {
     try{
         $options=[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION];
@@ -75,9 +76,26 @@ public static function findBy($condition){
 
 }
 //add
+// add("hp",9000);
+public static  function add(array $data){
+    try{
+  $str_keys=join(",",array_keys($data));
+$in=function($v){
+return "?";
+};
+
+$inter=join(",",array_map($in,$data));
+
+        $rp=self::$_CNX->prepare("insert into ".SELF::$TABLE."($str_keys) value ($inter)");
+        $rp->execute(array_values($data));
+}catch(PDOException $e ){
+        die ('erreur d\'ajout  de  '.SELF::$TABLE.' dans  la base de donnees '.$e->getMessage());
+}
+}
 
 
 // update
+
 
 
 
