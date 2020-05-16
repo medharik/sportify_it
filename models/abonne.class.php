@@ -1,6 +1,6 @@
 <?php 
 
-class Abonne {
+class Abonne extends Utils {
     //POJO : plain old java object
     //datas
 

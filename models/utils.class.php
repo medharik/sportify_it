@@ -19,10 +19,8 @@ public    static function connecter_db() {
     }
 }
 
-
-
 //delete 
-public static  function supprimer($id){
+public static  function delete($id){
     try{
   
         $rp=self::$_CNX->prepare("delete from ".self::$TABLE." where id=?");
@@ -86,7 +84,7 @@ return "?";
 
 $inter=join(",",array_map($in,$data));
 
-        $rp=self::$_CNX->prepare("insert into ".SELF::$TABLE."($str_keys) value ($inter)");
+        $rp=self::$_CNX->prepare("insert into ".SELF::$TABLE."($str_keys) values ($inter)");
         $rp->execute(array_values($data));
 }catch(PDOException $e ){
         die ('erreur d\'ajout  de  '.SELF::$TABLE.' dans  la base de donnees '.$e->getMessage());
@@ -95,14 +93,32 @@ $inter=join(",",array_map($in,$data));
 
 
 // update
+// $produit=['libelle'=>'dell d9','prix'=>9000], id=1;
+// update produit set libelle=? , prix=? where id=?
+//execute([])
 
+public static  function update(array $data, int $id){
+    try{
 
-
-
-
-
-
-
+        $str_keys=join(",",array_keys($data));
+        $in=function ($v){
+        return "$v=?";
+        };
+        $keys=array_keys($data);//['libelle','prix'] =>['libelle=?','prix=?']
+        // var_dump($keys);
+        $tab_intro=array_map($in,$keys);
+        // print_r($tab_intro);
+        //['libelle=?','prix=?'] => libelle=? , prix=?
+        $sets=join(",",$tab_intro);
+      
+$inter=join(",",array_map($in,$data));
+$data['id']=$id;
+        $rp=self::$_CNX->prepare(" update  ".SELF::$TABLE." set $sets   where id=?");
+        $rp->execute(array_values($data));
+}catch(PDOException $e ){
+        die ('erreur de modification   de  '.SELF::$TABLE.' dans  la base de donnees '.$e->getMessage());
+}
+}
 }
 
 

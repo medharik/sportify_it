@@ -1,16 +1,13 @@
 <?php 
-class User {
+class User extends Utils {
     //POJO : plain old java object
     //datas
-public   static $langue='FR';
-
+public static $TABLE ="users";
 private $login; 
 private $passe; 
 private $nom;
 private $email;
 private $role;
-
-
 //constructor 
 function __construct(string $passe=null,string $login=null,string $nom=null,string $email=null,string $role="",$remise,string $montant="",$type_paiement=""){
 $this->passe=$passe;
@@ -31,10 +28,9 @@ public function  __set($passe_attribut,$value){
 }
 
 //methodes
-public function ajouter(){
-    
+public function ajouter($data){
+    Parent::add($data);
 }
-
 
 }
 

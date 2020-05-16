@@ -1,5 +1,5 @@
 <?php 
-class Paiement {
+class Paiement extends Utils{
 //POJO : plain old java object
 //datas
 private $user; 
