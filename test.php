@@ -45,6 +45,5 @@ Utils::$TABLE='users';
 $user=['login'=>'ali','nom'=>'alami','email'=>'ali@gmail.com','passe'=>12345,'role'=>'admin'];
 // Utils::update($user,2);
 User::delete(2);
-
-
+// Produit::delete(3);
 ?>
