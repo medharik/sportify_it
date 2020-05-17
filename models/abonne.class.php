@@ -1,9 +1,9 @@
 <?php 
-
+// include("utils.class.php");
 class Abonne extends Utils {
     //POJO : plain old java object
     //datas
-
+public static $TABLE="abonnes";
 private $nom;
 private $prenom;
 private $date_naissance;

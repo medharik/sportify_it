@@ -4,7 +4,7 @@ class Utils {
 // connection 
 public static  $_CNX=NULL;// attribut de la classe 
 const TVA=20;
-public static  $TABLE ='abonne'; 
+public static  $TABLE; 
 
 public    static function connecter_db() {
     try{
@@ -22,7 +22,7 @@ public    static function connecter_db() {
 //delete 
 public static  function delete($id){
     try{
-  
+ 
         $rp=self::$_CNX->prepare("delete from ".self::$TABLE." where id=?");
         $rp->execute([$id]);
 }catch(PDOException $e ){
@@ -71,7 +71,6 @@ public static function findBy($condition){
  }catch(PDOException $e ){
  die ("erreur de  recuperation des ".SELF::$TABLE." dans  la base de donnees ".$e->getMessage());
  }
-
 }
 //add
 // add("hp",9000);
@@ -84,7 +83,8 @@ return "?";
 
 $inter=join(",",array_map($in,$data));
 
-        $rp=self::$_CNX->prepare("insert into ".SELF::$TABLE."($str_keys) values ($inter)");
+        $rp=self::$_CNX->prepare("insert into ".SELF::$TABLE." ($str_keys) values ($inter)");
+        echo "insert into ".SELF::$TABLE." ($str_keys) values ($inter)";
         $rp->execute(array_values($data));
 }catch(PDOException $e ){
         die ('erreur d\'ajout  de  '.SELF::$TABLE.' dans  la base de donnees '.$e->getMessage());
@@ -119,8 +119,34 @@ $data['id']=$id;
         die ('erreur de modification   de  '.SELF::$TABLE.' dans  la base de donnees '.$e->getMessage());
 }
 }
+//$infos = tmp_name, name, size, error, type
+public static function uploader(array $infos,$dossier="images"){
+ if(!is_dir($dossier)){
+mkdir($dossier,777,true);
+ }
+ $original_client_name=$infos['name'];
+ $tmp=$infos['tmp_name'];
+ $path_parts =pathinfo($original_client_name);
+ $ext= strtolower(  $path_parts['extension']);
+ $new_name=md5(time().rand(0,99999)).".$ext";
+ $chemin="$dossier/$new_name";
+ $autorise=['png','jpeg','gif','webp','jpg','pdf'];
+ if(!in_array($ext,$autorise)){
+die("ce type de fichier n'est pas autorisé");
+ }else if($infos['size']>8*1024*1024){
+die("la taille de ce fichier depasse 8Mo");
+ }else if(!move_uploaded_file($tmp,$chemin)) {
+die("une erreur est survenue lors de l'upload di fichier");
+ }
+ else{
+     return $chemin;
+ }
+
+
+    
+    
 }
 
-
+}
 
 ?>

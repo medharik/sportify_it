@@ -42,8 +42,11 @@ Utils::$TABLE='users';
 // echo $sets;
  Utils::connecter_db();
 // Utils::$TABLE='users';
-$user=['login'=>'ali','nom'=>'alami','email'=>'ali@gmail.com','passe'=>12345,'role'=>'admin'];
-// Utils::update($user,2);
-User::delete(2);
+// $user=['login'=>'ali','nom'=>'alami','email'=>'ali@gmail.com','passe'=>12345,'role'=>'admin'];
+// // Utils::update($user,2);
+// User::delete(2);
 // Produit::delete(3);
+Utils::$TABLE="abonnes";
+$p=['nom'=>'khalid','prenom'=>'ali','date_naissance'=>'1998-12-12','sexe'=>'homme'];
+Abonne::add($p);
 ?>
